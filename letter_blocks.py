@@ -1,17 +1,43 @@
 import streamlit as st
 import itertools
-import nltk
+from nltk.corpus import words
 
 st.title("Letter Block Word Finder")
 st.write(
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
 
-# Download the 'words' package if not already downloaded
-nltk.download('words')
+# Define the cubes
+cubes = [
+    'NDH',  # Cube 1
+    'EIP',  # Cube 2
+    'MPG',  # Cube 3
+    'QAI',  # Cube 4
+    'LOR',  # Cube 5
+    'LAWS',  # Cube 6
+    'ETJ',  # Cube 7
+    'VOHR',  # Cube 8
+    'ABCD',  # Cube 9
+    'YGC',  # Cube 10
+    'HELR',  # Cube 11
+    'SDNW',  # Cube 12
+    'SOAC',  # Cube 13
+    'TNWY',  # Cube 14
+    'TVUO',  # Cube 15
+    'FIKM'   # Cube 16
+]
+# How many block sets do you have?
+block_sets = st.slider("How many sets of blocks do you have?", min_value = 1, max_value = 10, value = 1)
 
+blocks = cubes * block_sets
+
+# Find words of length 4 (adjust word_length as needed)
+word_length = st.slider("Word Length", min_value=1, max_value=16, value=4)
 # Get the English dictionary words
-english_words = set(w.lower() for w in nltk.corpus.words.words())
+english_words = set(w.lower() for w in words.words() if len(w) == word_length)
+
+print(english_words)
+
 
 def find_words(cubes, word_length):
     """
@@ -36,34 +62,9 @@ def find_words(cubes, word_length):
 
     return words
 
-# Define the cubes
-cubes = [
-    'NDH',  # Cube 1
-    'EIP',  # Cube 2
-    'MPG',  # Cube 3
-    'QAI',  # Cube 4
-    'LOR',  # Cube 5
-    'LAWS',  # Cube 6
-    'ETJ',  # Cube 7
-    'VOHR',  # Cube 8
-    'ABCD',  # Cube 9
-    'YGC',  # Cube 10
-    'HELR',  # Cube 11
-    'SDNW',  # Cube 12
-    'SOAC',  # Cube 13
-    'TNWY',  # Cube 14
-    'TVUO',  # Cube 15
-    'FIKM'   # Cube 16
-]
-# How many block sets do you have?
-block_sets = st.number_input("How many sets of blocks do you have?", min_value = 1, max_value = 100, value = 1)
+st.text_input("Type the message you're trying to spell",value="happy",max_chars=blocks)
+if st.button('Find words'):
+    words = find_words(blocks, word_length)
 
-blocks = cubes * block_sets
-
-# Find words of length 4 (adjust word_length as needed)
-word_length = st.number_input("Word Length", min_value=1, max_value=16, value=4)
-words = find_words(blocks, word_length)
-
-print(f"Words of length {word_length}:")
-for word in set(words):  # Use set to remove duplicates
-    print(word)
+    for word in set(words):  # Use set to remove duplicates
+        print(word)
