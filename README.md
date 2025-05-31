@@ -1,6 +1,6 @@
-# 🎈 Blank app template
+# 🎈 Letter Block Combination Finder
 
-A simple Streamlit app template for you to modify!
+A simple Streamlit app that allows you to find letter block combinations for any words!
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
 
