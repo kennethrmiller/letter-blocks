@@ -25,15 +25,16 @@ def find_combinations(cubes, message):
     combinations = []
 
     def recursive_find(available_cubes, current_combination, remaining_word):
-        if not remaining_word:
-            combinations.append(current_combination[:])
-            return
-        for i, (cube_number, cube) in enumerate(available_cubes):
-            if remaining_word[0] in cube:
-                new_available_cubes = available_cubes[:i] + available_cubes[i+1:]
-                current_combination.append((cube_number, remaining_word[0]))
-                recursive_find(new_available_cubes, current_combination, remaining_word[1:])
-                current_combination.pop()
+        if len(combinations) < 100:
+            if not remaining_word:
+                combinations.append(current_combination[:])
+                return
+            for i, (cube_number, cube) in enumerate(available_cubes):
+                if remaining_word[0] in cube:
+                    new_available_cubes = available_cubes[:i] + available_cubes[i+1:]
+                    current_combination.append((cube_number, remaining_word[0]))
+                    recursive_find(new_available_cubes, current_combination, remaining_word[1:])
+                    current_combination.pop()
 
     numbered_cubes = list(enumerate(cubes, start=1))
     recursive_find(numbered_cubes, [], message)
@@ -83,6 +84,7 @@ total_blocks = remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clov
 message = st.text_input("Type the message you're trying to spell",value="happy",max_chars=len(total_blocks)).replace(" ","")
 combinations = find_combinations(total_blocks, message)
 
+st.write(len(combinations))
 if st.button('Find Words'):
     if len(combinations) >0:
         for i, combination in enumerate(combinations):
@@ -93,8 +95,9 @@ if st.button('Find Words'):
                 # st.write(f"{letter}: {cube_number}")
                 letter_list.append(letter)
                 cube_list.append(cube_number)
-            st.metric(str(letter_list).replace("'","").replace(",","-"),str(cube_list).replace(",","-"),border=True)
-            #st.metric("",str(cube_list).replace(",","-"),label_visibility="hidden")
+            #st.metric(str(letter_list).replace("'","").replace(","," -"),str(cube_list).replace(","," -"),border=True)
+            st.write(str(letter_list).replace("'","").replace(","," -"))
+            st.write(str(cube_list).replace(","," -"))
             # data_df = pd.DataFrame([letter_list,cube_list])
             # st.dataframe(data_df, hide_index=True)
             st.divider()
