@@ -84,7 +84,7 @@ else:
 
 # How many block sets do you have?
 block_sets = st.slider("How many sets of blocks do you have?", min_value = 1, max_value = 10, value = 1)
-blocks = cubes * block_sets
+blocks = cubes * block_sets 
 
 # Include Symbols?
 with st.expander("Would you like to include any symbols? This will remove possible blocks."):
@@ -100,7 +100,9 @@ with st.expander("Would you like to include any symbols? This will remove possib
 total_blocks = remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple)
 
 # Input the desired message
-message = st.text_input("Type the message you're trying to spell",value="happy birthday",max_chars=len(total_blocks)).replace(" ","")
+max_characters = len(total_blocks) - flower- four - flag - tree - heart - clover - pineapple
+
+message = st.text_input("Type the message you're trying to spell",value="happy birthday",max_chars=max_characters).replace(" ","")
 combinations = find_combinations(total_blocks, message)
 
 #st.write(len(combinations))
