@@ -115,10 +115,6 @@ if st.button('Find Words'):
             for cube_number, letter in combination:
                 # st.write(f"{letter}: {cube_number}")
                 letter_list.append(letter)
-                if cube_number > 16:
-                    cube_number = cube_number - 16
-                else:
-                        cube_number
                 cube_list.append(cube_number)
             #st.metric(str(letter_list).replace("'","").replace(","," -"),str(cube_list).replace(","," -"),border=True)
             st.write(str(letter_list).replace("'","").replace(","," -"))
