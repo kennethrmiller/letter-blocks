@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 # Functions to use later
 def remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple):
