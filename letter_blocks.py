@@ -47,8 +47,8 @@ st.write(
 )
 # Define Sidebar
 with st.sidebar.expander("Additional Notes"):
-    st.write("This letter block combination finder defaults to the 'Wolf Creek All Seasons Blocks', the combinations of which you can see below.")
-    st.write("If you would like to define your own work blocks, use the space below.")
+    st.write("This letter block combination finder defaults to the 'Wolf Creek All Seasons Blocks'; the combinations of which you can see below.")
+    st.write("If you would like to define your own word blocks, use the space below.")
     col1, col2 = st.columns(2)
     custom_blocks_checkbox = st.checkbox('Check this box to use custom blocks.')
     custom_blocks = st.text_area("Define your letter blocks in order below. Separate each letter grouping with a comma.").split(',')
