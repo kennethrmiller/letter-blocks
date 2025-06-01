@@ -87,15 +87,15 @@ block_sets = st.slider("How many sets of blocks do you have?", min_value = 1, ma
 blocks = cubes * block_sets
 
 # Include Symbols?
-st.write("Would you like to include any symbols? This will remove possible blocks.")
-col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
-flower = col1.checkbox("🌺",value = False)
-tree = col2.checkbox("🌲",value = False)
-flag = col3.checkbox("🇺🇸",value = False)
-four = col4.checkbox("4️⃣",value = False)
-heart = col5.checkbox("❤️",value = False)
-clover = col6.checkbox("🍀",value = False)
-pineapple = col7.checkbox("🍍",value = False)
+with st.expander("Would you like to include any symbols? This will remove possible blocks."):
+    col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+    flower = col1.checkbox("🌺",value = False)
+    tree = col2.checkbox("🌲",value = False)
+    flag = col3.checkbox("🇺🇸",value = False)
+    four = col4.checkbox("4️⃣",value = False)
+    heart = col5.checkbox("❤️",value = False)
+    clover = col6.checkbox("🍀",value = False)
+    pineapple = col7.checkbox("🍍",value = False)
 
 total_blocks = remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple)
 
