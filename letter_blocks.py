@@ -40,10 +40,24 @@ def find_combinations(cubes, message):
     recursive_find(numbered_cubes, [], message)
     return combinations
 
-st.title("All Seasons Blocks Word Finder")
+# Header and Titles
+st.title("Word Block Combination Finder")
+st.sidebar.image('word-blocks.webp')
 st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+    "This combination finder allows you to generate combinations of blocks to spell whatever you want! Simply pick the number of sets of blocks you have and type your desired phrase below."
 )
+# Define Sidebar
+with st.sidebar.expander("Additional Notes"):
+    st.write("This word block combination finder defaults to the 'Wolf Creek All Seasons Blocks', the combinations of which you can see below.")
+    st.write("If you would like to define your own work blocks, use the space below.")
+    col1, col2 = st.columns(2)
+    custom_blocks_checkbox = st.checkbox('Check this box to use custom blocks.')
+    custom_blocks = st.text_area("Define your word blocks in order below. Separate each letter grouping with a comma.").split(',')
+    st.caption("Symbols are unavailble with custom blocks.")
+    st.divider()
+    st.write("All Seasons Block combinations are below:")
+    st.write("NDH,EIP,MPG,QAI,LOR,LAWS,ETJ,VOHR,ABCD,YGC,HELR,SDNW,SOAC,TNWY,TVUO,FIKM")
+
 # Define the cubes
 cubes = [
     'NDH',  # Cube 1, also has flower
@@ -63,6 +77,12 @@ cubes = [
     'TVUO',  # Cube 15
     'FIKM'   # Cube 16
 ]
+
+if custom_blocks_checkbox:
+    cubes = custom_blocks
+else:
+    cubes = cubes
+
 # How many block sets do you have?
 block_sets = st.slider("How many sets of blocks do you have?", min_value = 1, max_value = 10, value = 1)
 blocks = cubes * block_sets
@@ -84,7 +104,7 @@ total_blocks = remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clov
 message = st.text_input("Type the message you're trying to spell",value="happy",max_chars=len(total_blocks)).replace(" ","")
 combinations = find_combinations(total_blocks, message)
 
-st.write(len(combinations))
+#st.write(len(combinations))
 if st.button('Find Words'):
     if len(combinations) >0:
         for i, combination in enumerate(combinations):
