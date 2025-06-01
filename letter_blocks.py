@@ -3,19 +3,19 @@ import streamlit as st
 # Functions to use later
 def remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple):
     if flower:
-        del blocks[0]
+        blocks[0] = ""
     if tree:
-        del blocks[1]
+        blocks[1] = ""
     if flag:
-        del blocks[2]
+        blocks[2] = ""
     if four:
-        del blocks[3]
+        blocks[3] = ""
     if heart:
-        del blocks[4]
+        blocks[4] = ""
     if clover:
-        del blocks[6]
+        blocks[6] = ""
     if pineapple:
-        del blocks[9]
+        blocks[9] = ""
 
     return blocks
 
