@@ -100,7 +100,7 @@ pineapple = col7.checkbox("🍍",value = False)
 total_blocks = remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple)
 
 # Input the desired message
-message = st.text_input("Type the message you're trying to spell",value="happy",max_chars=len(total_blocks)).replace(" ","")
+message = st.text_input("Type the message you're trying to spell",value="happy birthday",max_chars=len(total_blocks)).replace(" ","")
 combinations = find_combinations(total_blocks, message)
 
 #st.write(len(combinations))
