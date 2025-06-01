@@ -2,7 +2,7 @@
 
 A simple Streamlit app that allows you to find letter block combinations for any words!
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://letter-block-combos.streamlit.app)
 
 ### How to run it on your own machine
 
