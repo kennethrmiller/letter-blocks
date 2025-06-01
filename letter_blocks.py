@@ -113,14 +113,13 @@ if st.button('Find Words'):
             cube_list = []
             st.write(f"Combination {i + 1}:")
             for cube_number, letter in combination:
-                # st.write(f"{letter}: {cube_number}")
                 letter_list.append(letter)
+                if cube_number > 16:
+                    cube_number = cube_number - 16
                 cube_list.append(cube_number)
-            #st.metric(str(letter_list).replace("'","").replace(","," -"),str(cube_list).replace(","," -"),border=True)
             st.write(str(letter_list).replace("'","").replace(","," -"))
             st.write(str(cube_list).replace(","," -"))
-            # data_df = pd.DataFrame([letter_list,cube_list])
-            # st.dataframe(data_df, hide_index=True)
+
             st.divider()
             if i > 3:
                 if st.button('Continue Combinations?'):
