@@ -1,4 +1,3 @@
-from tkinter import HORIZONTAL
 import streamlit as st
 from pathlib import Path
 
