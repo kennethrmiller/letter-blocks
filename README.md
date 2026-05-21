@@ -2,7 +2,8 @@
 
 A simple Streamlit app that allows you to find letter block combinations for any words!
 
-[![Open in Streamlit](https://streamlit.io/images/brand/streamlit-mark-color.png)](https://letter-block-combos.streamlit.app)
+Open in Streamlit:
+https://letter-block-combos.streamlit.app
 
 ### How to run it on your own machine
 
