@@ -1,0 +1,90 @@
+/* ============================================================
+   OAK THEME — page-wide overrides
+   Loaded conditionally from letter_blocks.py when the toggle is on.
+   Targets Streamlit's widget chrome so the whole page reads "oak,"
+   not just the letter blocks. Fonts inherit Streamlit's default.
+   ============================================================ */
+
+/* Page surfaces ------------------------------------------------ */
+.stApp {
+    background-color: #F5EBD2;
+}
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div:first-child {
+    background-color: #EFE3C0;
+}
+
+/* Body & headings — color only, no font swap ------------------ */
+.stApp,
+.stApp p,
+.stApp li,
+.stApp label {
+    color: #3A2E26;
+}
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+[data-testid="stHeading"] {
+    color: #3A2E26;
+}
+
+/* Buttons (Find Words, etc.) ---------------------------------- */
+.stApp .stButton > button {
+    background: #A87A4F;
+    color: #FBF3DE;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 0 #6F4E2E;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 10px 22px;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+}
+.stApp .stButton > button:hover {
+    background: #6F4E2E;
+    color: #FBF3DE;
+    border: none;
+}
+.stApp .stButton > button:focus:not(:active) {
+    color: #FBF3DE;
+    box-shadow: 0 3px 0 #6F4E2E, 0 0 0 3px rgba(168, 122, 79, 0.3);
+}
+.stApp .stButton > button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #6F4E2E;
+    color: #FBF3DE;
+}
+
+/* Text inputs ------------------------------------------------- */
+.stApp [data-baseweb="input"],
+.stApp [data-baseweb="input"] > div {
+    background-color: #FBF3DE;
+    border-color: #C9B58E;
+}
+.stApp [data-baseweb="input"] input {
+    background-color: #FBF3DE;
+    color: #3A2E26;
+}
+.stApp [data-baseweb="textarea"] textarea {
+    background-color: #FBF3DE;
+    color: #3A2E26;
+    border-color: #C9B58E;
+}
+
+/* Expanders --------------------------------------------------- */
+.stApp [data-testid="stExpander"] {
+    background: #FBF3DE;
+    border: 1px solid #C9B58E;
+    border-radius: 12px;
+}
+.stApp [data-testid="stExpander"] summary,
+.stApp [data-testid="stExpander"] details > summary p {
+    color: #6F5C49;
+    font-weight: 500;
+}
+
+/* Divider ----------------------------------------------------- */
+.stApp hr {
+    border-color: #C9B58E;
+}
