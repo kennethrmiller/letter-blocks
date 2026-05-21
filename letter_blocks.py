@@ -1,4 +1,28 @@
+from tkinter import HORIZONTAL
 import streamlit as st
+from pathlib import Path
+
+# ---------------------------------------------------------------------------
+# Page config
+# ---------------------------------------------------------------------------
+st.set_page_config(
+    page_title="LetterBlocks",
+    page_icon=".",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
+# ---------------------------------------------------------------------------
+# Design system CSS — loaded from styles.css
+# ---------------------------------------------------------------------------
+#CSS_PATH = Path(__file__).parent / "themes/styles.css"
+#st.html(f"<style>{CSS_PATH.read_text()}</style>")
+
+# Oak theme overrides — layered on top of styles.css when the toggle is on.
+oak_theme = st.toggle("Oak theme (preview)", value=False)
+OAK_CSS_PATH = Path(__file__).parent / "themes/oak-theme.css"
+if oak_theme and OAK_CSS_PATH.exists():
+    st.html(f"<style>{OAK_CSS_PATH.read_text()}</style>")
 
 # Functions to use later
 def remove_blocks_for_symbols(blocks,flower,four,flag,tree,heart,clover,pineapple):
@@ -42,6 +66,7 @@ def find_combinations(cubes, message):
 # Header and Titles
 st.title("Letter Block Combination Finder")
 st.sidebar.image('word-blocks.webp')
+
 st.write(
     "This combination finder allows you to generate combinations of blocks to spell whatever you want! Simply pick the number of sets of blocks you have and type your desired phrase below."
 )
@@ -83,6 +108,8 @@ else:
     cubes = cubes
 
 # How many block sets do you have?
+col1, col2 = st.columns(2)
+
 block_sets = st.slider("How many sets of blocks do you have?", min_value = 1, max_value = 10, value = 1)
 blocks = cubes * block_sets 
 
@@ -106,25 +133,84 @@ message = st.text_input("Type the message you're trying to spell",value="happy b
 combinations = find_combinations(total_blocks, message)
 
 #st.write(len(combinations))
-if st.button('Find Words'):
-    if len(combinations) >0:
-        for i, combination in enumerate(combinations):
-            letter_list = []
-            cube_list = []
-            st.write(f"Combination {i + 1}:")
-            for cube_number, letter in combination:
-                letter_list.append(letter)
-                if cube_number > 16:
-                    cube_number = cube_number - 16
-                cube_list.append(cube_number)
-            st.write(str(letter_list).replace("'","").replace(","," -"))
-            st.write(str(cube_list).replace(","," -"))
 
-            st.divider()
-            if i > 3:
-                if st.button('Continue Combinations?'):
-                    continue
-                else:
-                    break
+# Render helpers --------------------------------------------------
+def render_sequence(combination, oak=False, primary=False):
+    """Build HTML for one combination as a row of letter blocks.
+
+    Styles are inlined directly on each element so the output works regardless
+    of whether Streamlit's HTML pipeline strips classes or sandboxes content.
+    Preserves the original display rule for cube numbers (wrap >16 → -16),
+    keeping the find_combinations output untouched.
+    """
+    face_size = 56 if primary else 44
+    font_size = 30 if primary else 24
+
+    if oak:
+        face_style = (
+            f"display:inline-flex;align-items:center;justify-content:center;"
+            f"width:{face_size}px;height:{face_size}px;"
+            f"background:#C99A66;color:#3A2E26;border-radius:9px;"
+            f"font-size:{font_size}px;line-height:1;"
+            f"box-shadow:0 3px 0 rgba(58,30,10,0.22),0 5px 8px rgba(58,46,38,0.14);"
+        )
+        cube_style = (
+            "letter-spacing:0.02em;color:#6F5C49;"
+        )
+    else:
+        face_style = (
+            f"display:inline-flex;align-items:center;justify-content:center;"
+            f"width:{face_size}px;height:{face_size}px;"
+            f"background:#FFFFFF;color:#1A1A1A;"
+            f"border:1.5px solid #1A1A1A;border-radius:0;"
+            f"font-size:{font_size}px;line-height:1;"
+        )
+        cube_style = (
+            "letter-spacing:0.06em;color:#5E5E5E;"
+        )
+
+    block_style = (
+        "display:inline-flex;flex-direction:column;align-items:center;gap:6px;"
+    )
+    row_style = (
+        "display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;"
+        f"gap:10px;row-gap:18px;padding:8px 0;margin:{16 if primary else 8}px 0;"
+    )
+
+    blocks_html = []
+    for cube_number, letter in combination:
+        display_num = cube_number - 16 if cube_number > 16 else cube_number
+        blocks_html.append(
+            f'<div style="{block_style}">'
+            f'<span style="{face_style}">{display_num}</span>'
+            f'<span style="{cube_style}">{letter}</span>'
+            f'</div>'
+        )
+    return f'<div style="{row_style}">{"".join(blocks_html)}</div>'
+
+# Persist click across reruns so toggling the theme doesn't hide results.
+if 'show_combos' not in st.session_state:
+    st.session_state.show_combos = False
+
+if st.button('Find Words'):
+    st.session_state.show_combos = True
+
+if st.session_state.show_combos:
+    if len(combinations) > 0:
+        # First combination — featured at full size
+        st.markdown(
+            render_sequence(combinations[0], oak=oak_theme, primary=True),
+            unsafe_allow_html=True,
+        )
+
+        # Remaining combinations — tucked into Streamlit's native expander
+        if len(combinations) > 1:
+            others = len(combinations) - 1
+            with st.expander(f"Other combinations ({others})"):
+                for combo in combinations[1:]:
+                    st.markdown(
+                        render_sequence(combo, oak=oak_theme, primary=False),
+                        unsafe_allow_html=True,
+                    )
     else:
         st.write("No combinations found, please try again.")
